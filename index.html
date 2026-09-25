@@ -122,8 +122,8 @@
   .proj-head .stamp-summary b{ color:var(--green); }
 
   .tbl-scroll{ overflow-x:auto; }
-  table.progress{ width:100%; border-collapse:collapse; font-family:'IBM Plex Mono',monospace; font-size:12.5px; min-width:920px; }
-  table.progress th, table.progress td{ padding:9px 10px; text-align:center; border-bottom:1px solid var(--grid-line); white-space:nowrap; }
+  table.progress{ width:100%; border-collapse:collapse; font-family:'IBM Plex Mono',monospace; font-size:12.5px; min-width:760px; }
+  table.progress th, table.progress td{ padding:9px 6px; text-align:center; border-bottom:1px solid var(--grid-line); white-space:nowrap; }
   table.progress th{ color:var(--muted); font-weight:500; font-size:11px; letter-spacing:.03em; text-transform:uppercase; }
   table.progress td.tower{ text-align:left; color:var(--ink); font-weight:600; }
   table.progress td.tower .rowlabel{ font-family:'Inter',sans-serif; }
@@ -139,7 +139,7 @@
   .cell-c{
     display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:9.5px; font-weight:700;
     letter-spacing:.06em; color:var(--green); border:1px solid var(--green); border-radius:3px;
-    padding:2px 6px; transform:rotate(-4deg); background:var(--green-dim); text-transform:uppercase;
+    padding:1px 7px; font-size:12px; background:var(--green-dim);
   }
   .cell-gf{
     color:var(--red); font-weight:700; background:var(--red-dim); border-radius:3px; padding:2px 6px;
@@ -443,7 +443,7 @@ const PROGRESS_DATA = {
 
 const PROGRESS_BOTH_AVG = { done: 92, paid: 89.6, vals: [204,211,224,225,228,239,265,265,278,276,280,285] };
 
-const PROGRESS_LEGEND = "PB = Plinth Beam · PM = Parpet Mumty · EF = EarthFilling · OM = OHT Machine room · GF = Ground Floor · C = Completed";
+const PROGRESS_LEGEND = "PB = Plinth Beam · PM = Parpet Mumty · EF = EarthFilling · OM = OHT Machine room · GF = Ground Floor · ✓ = Completed";
 
 </script>
 <script>
@@ -576,7 +576,7 @@ document.querySelectorAll('.tab').forEach(btn=>{
 
 /* ---------------- Progress Tracker render ---------------- */
 function renderCell(v){
-  if(v==="C") return '<span class="cell-c">Completed</span>';
+  if(v==="C") return '<span class="cell-c" title="Completed">✓</span>';
   if(v==="GF") return '<span class="cell-gf">GF</span>';
   return v;
 }
@@ -590,7 +590,7 @@ function buildProjectTable(name, data){
     PROGRESS_COLUMNS.map(c=>`<th class="col-head">${c.label}<span class="sub">${c.sub}</span></th>`).join('') + `</tr>`;
   let rows = data.rows.map(r=>{
     const cells = r.vals ? r.vals.map(v=>`<td>${renderCell(v)}</td>`).join('') :
-      PROGRESS_COLUMNS.map(()=>`<td><span class="cell-c">Completed</span></td>`).join('');
+      PROGRESS_COLUMNS.map(()=>`<td><span class="cell-c" title="Completed">✓</span></td>`).join('');
     return `<tr id="${towerRowId(name,r.tower)}"><td class="tower"><span class="rowlabel">${r.tower}</span></td><td class="pct">${r.done}</td><td class="pct">${r.paid}</td>${cells}</tr>`;
   }).join('');
   const avgCells = data.avg.vals.map(v=>`<td>${v}</td>`).join('');
